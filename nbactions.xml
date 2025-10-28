@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-deployBackend</actionName>
+            <displayName>deployBackend</displayName>
+            <goals>
+                <goal>org.springframework.boot:spring-boot-maven-plugin:3.5.7:run</goal>
+            </goals>
+        </action>
+    </actions>
