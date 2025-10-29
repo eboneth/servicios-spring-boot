@@ -4,6 +4,7 @@ import com.eboneth.espec.empresa.dto.TipoEmpresaDtoCrear;
 import com.eboneth.espec.empresa.dto.TipoEmpresaDtoRespuesta;
 import com.eboneth.espec.empresa.servicio.TipoEmpresaCrearServicio;
 import com.eboneth.espec.empresa.servicio.TipoEmpresaListarServicio;
+import com.eboneth.espec.empresa.servicio.TipoEmpresaActualizarServicio;
 import com.eboneth.espec.utilidad.respuesta.RespuestaHttp;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,14 @@ import java.util.List;
 public class TipoEmpresaControlador {
     private final TipoEmpresaCrearServicio tipoEmpresaCrearServicio;
     private final TipoEmpresaListarServicio tipoEmpresaListarServicio;
+    private final TipoEmpresaActualizarServicio tipoEmpresaActualizarServicio;
 
     public TipoEmpresaControlador(TipoEmpresaCrearServicio tipoEmpresaCrearServicio,
-                                  TipoEmpresaListarServicio tipoEmpresaListarServicio) {
+                                  TipoEmpresaListarServicio tipoEmpresaListarServicio,
+                                  TipoEmpresaActualizarServicio tipoEmpresaActualizarServicio) {
         this.tipoEmpresaCrearServicio = tipoEmpresaCrearServicio;
         this.tipoEmpresaListarServicio = tipoEmpresaListarServicio;
+        this.tipoEmpresaActualizarServicio = tipoEmpresaActualizarServicio;
     }
     
     @PostMapping("/add")
@@ -39,6 +43,12 @@ public class TipoEmpresaControlador {
     public ResponseEntity<?> listarTipoEmpresa(@PathVariable("id") Integer id){
         TipoEmpresaDtoRespuesta tipoEmpresaDtoRespuesta = tipoEmpresaListarServicio.buscarPorId(id);
         return RespuestaHttp.ok("Tipo de Empresa encontrada con exito", tipoEmpresaDtoRespuesta);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> actualizarTipoEmpresa(@PathVariable Integer id, @RequestBody TipoEmpresaDtoCrear dto) {
+        TipoEmpresaDtoRespuesta actualizado = tipoEmpresaActualizarServicio.actualizar(id, dto);
+        return RespuestaHttp.ok("Tipo de empresa actualizado", actualizado);
     }
     
 }
