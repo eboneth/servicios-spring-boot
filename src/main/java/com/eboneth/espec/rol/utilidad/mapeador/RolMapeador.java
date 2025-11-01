@@ -3,7 +3,7 @@ package com.eboneth.espec.rol.utilidad.mapeador;
 
 import com.eboneth.espec.rol.entidad.Rol;
 import com.eboneth.espec.rol.dto.RolDtoRespuesta;
-import com.eboneth.espec.utilidad.mapeador.MapeoEntidadDto;
+import com.eboneth.espec.infraestructura.utilidad.mapeador.MapeoEntidadDto;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -3,7 +3,7 @@ package com.eboneth.espec.empresa.utilidad.mapeador;
 
 import com.eboneth.espec.empresa.dto.TipoEmpresaDtoRespuesta;
 import com.eboneth.espec.empresa.entidad.TipoEmpresa;
-import com.eboneth.espec.utilidad.mapeador.MapeoEntidadDto;
+import com.eboneth.espec.infraestructura.utilidad.mapeador.MapeoEntidadDto;
 import org.springframework.stereotype.Component;
 
 @Component

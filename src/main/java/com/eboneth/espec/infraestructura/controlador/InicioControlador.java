@@ -1,7 +1,7 @@
 package com.eboneth.espec.infraestructura.controlador;
 
-import com.eboneth.espec.utilidad.respuesta.RespuestaHttp;
-import com.eboneth.espec.utilidad.respuesta.RespuestaHttpModelo;
+import com.eboneth.espec.infraestructura.utilidad.respuesta.RespuestaHttp;
+import com.eboneth.espec.infraestructura.utilidad.respuesta.RespuestaHttpModelo;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.core.env.Environment;

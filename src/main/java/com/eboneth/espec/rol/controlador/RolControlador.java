@@ -4,7 +4,7 @@ package com.eboneth.espec.rol.controlador;
 import com.eboneth.espec.rol.dto.RolDtoCrear;
 import com.eboneth.espec.rol.dto.RolDtoRespuesta;
 import com.eboneth.espec.rol.servicio.RolCrearServicio;
-import com.eboneth.espec.utilidad.respuesta.RespuestaHttp;
+import com.eboneth.espec.infraestructura.utilidad.respuesta.RespuestaHttp;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;

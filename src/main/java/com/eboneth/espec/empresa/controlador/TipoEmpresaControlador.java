@@ -5,7 +5,7 @@ import com.eboneth.espec.empresa.dto.TipoEmpresaDtoRespuesta;
 import com.eboneth.espec.empresa.servicio.TipoEmpresaCrearServicio;
 import com.eboneth.espec.empresa.servicio.TipoEmpresaListarServicio;
 import com.eboneth.espec.empresa.servicio.TipoEmpresaActualizarServicio;
-import com.eboneth.espec.utilidad.respuesta.RespuestaHttp;
+import com.eboneth.espec.infraestructura.utilidad.respuesta.RespuestaHttp;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
