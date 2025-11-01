@@ -11,7 +11,7 @@ import java.util.Objects;
 public class RelUsuarioEmpresaPK implements Serializable {
 
     @NotNull
-    @Column(name="id_usuario", nullable = false)
+    @Column(name = "id_usuario", nullable = false)
     private Integer idUsuario;
 
     @NotNull
@@ -21,7 +21,7 @@ public class RelUsuarioEmpresaPK implements Serializable {
     public RelUsuarioEmpresaPK() {
     }
 
-    public RelUsuarioEmpresaPK(Integer idUsuario, Integer idEmpresa) {
+    public RelUsuarioEmpresaPK(int idUsuario, int idEmpresa) {
         this.idUsuario = idUsuario;
         this.idEmpresa = idEmpresa;
     }
@@ -43,21 +43,26 @@ public class RelUsuarioEmpresaPK implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof RelUsuarioEmpresaPK that)) return false;
-        return Objects.equals(idUsuario, that.idUsuario) && Objects.equals(idEmpresa, that.idEmpresa);
-    }
-
-    @Override
     public int hashCode() {
         return Objects.hash(idUsuario, idEmpresa);
     }
 
     @Override
-    public String toString() {
-        return "RelUsuarioEmpresaPK{" +
-                "idUsuario=" + idUsuario +
-                "idEmpresa=" + idEmpresa +
-                '}';
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        RelUsuarioEmpresaPK other = (RelUsuarioEmpresaPK) obj;
+        return Objects.equals(idUsuario, other.idUsuario)
+                && Objects.equals(idEmpresa, other.idEmpresa);
     }
+
+    @Override
+    public String toString() {
+        return "idUsuario=" + idUsuario + ", idEmpresa=" + idEmpresa;
+    }
+
 }

@@ -1,43 +1,50 @@
 package com.eboneth.espec.vacante.entidad;
 
 import com.eboneth.espec.vacante.entidad.pk.RelUsuarioEmpresaPK;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.UniqueConstraint;
 
 import java.io.Serializable;
-import java.util.Objects;
 
-@Table(name="rel_usuarios_empresas",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_empresa"}))
-@Entity(name = "vacantes_RelUsuarioEmpresa")
+@Table(
+        name = "rel_usuarios_empresas",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_empresa"})
+)
+@Entity(name = "vacante_RelUsuarioEmpresa")
 public class RelUsuarioEmpresa implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
     protected RelUsuarioEmpresaPK relUsuarioEmpresaPK;
 
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Usuario usuario;
+    @Column(name = "permiso_rel_usuario_empresa", nullable = false)
+    private short permisoRelUsuarioEmpresa;
 
     @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Empresa empresa;
 
-    @NotNull
-    @Column(name = "permiso_rel_usuario_empresa")
-    private Short permisoRelUsuarioEmpresa;
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Usuario usuario;
 
     public RelUsuarioEmpresa() {
     }
 
-    public RelUsuarioEmpresa(RelUsuarioEmpresaPK relUsuarioEmpresaPK, Short permisoRelUsuarioEmpresa) {
-        this.relUsuarioEmpresaPK = relUsuarioEmpresaPK;
-        this.permisoRelUsuarioEmpresa = permisoRelUsuarioEmpresa;
-    }
-
     public RelUsuarioEmpresa(RelUsuarioEmpresaPK relUsuarioEmpresaPK) {
         this.relUsuarioEmpresaPK = relUsuarioEmpresaPK;
+    }
+
+    public RelUsuarioEmpresa(RelUsuarioEmpresaPK relUsuarioEmpresaPK, short permisoRelUsuarioEmpresa) {
+        this.relUsuarioEmpresaPK = relUsuarioEmpresaPK;
+        this.permisoRelUsuarioEmpresa = permisoRelUsuarioEmpresa;
     }
 
     public RelUsuarioEmpresa(int idUsuario, int idEmpresa) {
@@ -52,12 +59,12 @@ public class RelUsuarioEmpresa implements Serializable {
         this.relUsuarioEmpresaPK = relUsuarioEmpresaPK;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public short getPermisoRelUsuarioEmpresa() {
+        return permisoRelUsuarioEmpresa;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setPermisoRelUsuarioEmpresa(short permisoRelUsuarioEmpresa) {
+        this.permisoRelUsuarioEmpresa = permisoRelUsuarioEmpresa;
     }
 
     public Empresa getEmpresa() {
@@ -68,32 +75,38 @@ public class RelUsuarioEmpresa implements Serializable {
         this.empresa = empresa;
     }
 
-    public Short getPermisoRelUsuarioEmpresa() {
-        return permisoRelUsuarioEmpresa;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setPermisoRelUsuarioEmpresa(Short permisoRelUsuarioEmpresa) {
-        this.permisoRelUsuarioEmpresa = permisoRelUsuarioEmpresa;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof RelUsuarioEmpresa that)) return false;
-        return Objects.equals(relUsuarioEmpresaPK, that.relUsuarioEmpresaPK);
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(relUsuarioEmpresaPK);
+        int hash = 0;
+        hash += (relUsuarioEmpresaPK != null ? relUsuarioEmpresaPK.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        RelUsuarioEmpresa other = (RelUsuarioEmpresa) obj;
+        return relUsuarioEmpresaPK != null && relUsuarioEmpresaPK.equals(other.relUsuarioEmpresaPK);
     }
 
     @Override
     public String toString() {
-        return "RelUsuarioEmpresa{" +
-                "relUsuarioEmpresaPK=" + relUsuarioEmpresaPK +
-                "usuario=" + usuario +
-                "empresa=" + empresa +
-                "permisoRelUsuarioEmpresa=" + permisoRelUsuarioEmpresa +
-                '}';
+        return "usuarioId=" + (relUsuarioEmpresaPK != null ? relUsuarioEmpresaPK.getIdUsuario() : null)
+                + ", empresaId=" + (relUsuarioEmpresaPK != null ? relUsuarioEmpresaPK.getIdEmpresa() : null)
+                + ", permiso=" + permisoRelUsuarioEmpresa;
     }
+
 }

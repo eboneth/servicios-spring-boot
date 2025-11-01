@@ -1,22 +1,31 @@
 package com.eboneth.espec.vacante.entidad;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
-import java.util.Objects;
 
-@Table(name="vacantes")
-@Entity(name = "vacantes_Vacantes")
+@Table(name = "vacantes")
+@Entity(name = "vacante_Vacante")
 public class Vacante implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_vacante")
+    @Column(name = "id_vacante")
     private Integer idVacante;
 
     @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion")
@@ -24,9 +33,8 @@ public class Vacante implements Serializable {
     private Ubicacion idUbicacion;
 
     @JoinColumns({
-            @JoinColumn(name="id_usuario", referencedColumnName = "id_usuario"),
-            @JoinColumn(name="id_empresa", referencedColumnName = "id_empresa")
-    })
+        @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"),
+        @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa")})
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private RelUsuarioEmpresa relUsuarioEmpresa;
 
@@ -44,32 +52,34 @@ public class Vacante implements Serializable {
 
     @NotNull
     @Size(min = 1, max = 300)
-    @Column(name="titulo_vacante", nullable=false, length = 300)
+    @Column(name = "titulo_vacante", nullable = false, length = 300)
     private String tituloVacante;
 
     @NotNull
     @Lob
-    @Column(name="detalle_vacante", nullable=false)
+    @Column(name = "detalle_vacante", nullable = false)
     private String detalleVacante;
 
     @NotNull
-    @Column(name="fecha_inicio_vacante", nullable = false)
+    @Column(name = "fecha_inicio_vacante", nullable = false)
     private OffsetDateTime fechaInicioVacante;
 
     @NotNull
-    @Column(name="fecha_fin_vacante", nullable = false)
+    @Column(name = "fecha_fin_vacante", nullable = false)
     private OffsetDateTime fechaFinVacante;
 
     @NotNull
-    @Column(name="estado_vacante", nullable = false)
-    private Short estadoVacante;
+    @Column(name = "estado_vacante", nullable = false)
+    private short estadoVacante;
 
     @NotNull
-    @Column(name="min_salario_vacante", nullable = false, length = 100)
+    @Size(min = 1, max = 100)
+    @Column(name = "min_salario_vacante", nullable = false, length = 100)
     private String minSalarioVacante;
 
     @NotNull
-    @Column(name="max_salario_vacante", nullable = false, length = 100)
+    @Size(min = 1, max = 100)
+    @Column(name = "max_salario_vacante", nullable = false, length = 100)
     private String maxSalarioVacante;
 
     public Vacante() {
@@ -79,13 +89,12 @@ public class Vacante implements Serializable {
         this.idVacante = idVacante;
     }
 
-    public Vacante(Integer idVacante, Ubicacion idUbicacion, RelUsuarioEmpresa relUsuarioEmpresa, Jornada idJornada, Modalidad idModalidad, TipoContrato idTipoContrato, String tituloVacante, String detalleVacante, OffsetDateTime fechaInicioVacante, OffsetDateTime fechaFinVacante, Short estadoVacante, String minSalarioVacante, String maxSalarioVacante) {
+    public Vacante(
+            Integer idVacante, String tituloVacante, String detalleVacante,
+            OffsetDateTime fechaInicioVacante, OffsetDateTime fechaFinVacante,
+            short estadoVacante, String minSalarioVacante, String maxSalarioVacante
+    ) {
         this.idVacante = idVacante;
-        this.idUbicacion = idUbicacion;
-        this.relUsuarioEmpresa = relUsuarioEmpresa;
-        this.idJornada = idJornada;
-        this.idModalidad = idModalidad;
-        this.idTipoContrato = idTipoContrato;
         this.tituloVacante = tituloVacante;
         this.detalleVacante = detalleVacante;
         this.fechaInicioVacante = fechaInicioVacante;
@@ -103,44 +112,12 @@ public class Vacante implements Serializable {
         this.idVacante = idVacante;
     }
 
-    public Ubicacion getIdUbicacion() {
-        return idUbicacion;
+    public String getTituloVacante() {
+        return tituloVacante;
     }
 
-    public void setIdUbicacion(Ubicacion idUbicacion) {
-        this.idUbicacion = idUbicacion;
-    }
-
-    public RelUsuarioEmpresa getRelUsuarioEmpresa() {
-        return relUsuarioEmpresa;
-    }
-
-    public void setRelUsuarioEmpresa(RelUsuarioEmpresa relUsuarioEmpresa) {
-        this.relUsuarioEmpresa = relUsuarioEmpresa;
-    }
-
-    public Jornada getIdJornada() {
-        return idJornada;
-    }
-
-    public void setIdJornada(Jornada idJornada) {
-        this.idJornada = idJornada;
-    }
-
-    public Modalidad getIdModalidad() {
-        return idModalidad;
-    }
-
-    public void setIdModalidad(Modalidad idModalidad) {
-        this.idModalidad = idModalidad;
-    }
-
-    public TipoContrato getIdTipoContrato() {
-        return idTipoContrato;
-    }
-
-    public void setIdTipoContrato(TipoContrato idTipoContrato) {
-        this.idTipoContrato = idTipoContrato;
+    public void setTituloVacante(String tituloVacante) {
+        this.tituloVacante = tituloVacante;
     }
 
     public String getDetalleVacante() {
@@ -149,14 +126,6 @@ public class Vacante implements Serializable {
 
     public void setDetalleVacante(String detalleVacante) {
         this.detalleVacante = detalleVacante;
-    }
-
-    public String getTituloVacante() {
-        return tituloVacante;
-    }
-
-    public void setTituloVacante(String tituloVacante) {
-        this.tituloVacante = tituloVacante;
     }
 
     public OffsetDateTime getFechaInicioVacante() {
@@ -175,11 +144,11 @@ public class Vacante implements Serializable {
         this.fechaFinVacante = fechaFinVacante;
     }
 
-    public Short getEstadoVacante() {
+    public short getEstadoVacante() {
         return estadoVacante;
     }
 
-    public void setEstadoVacante(Short estadoVacante) {
+    public void setEstadoVacante(short estadoVacante) {
         this.estadoVacante = estadoVacante;
     }
 
@@ -199,34 +168,71 @@ public class Vacante implements Serializable {
         this.maxSalarioVacante = maxSalarioVacante;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Vacante vacante = (Vacante) o;
-        return Objects.equals(idVacante, vacante.idVacante);
+    public Jornada getIdJornada() {
+        return idJornada;
+    }
+
+    public void setIdJornada(Jornada idJornada) {
+        this.idJornada = idJornada;
+    }
+
+    public Modalidad getIdModalidad() {
+        return idModalidad;
+    }
+
+    public void setIdModalidad(Modalidad idModalidad) {
+        this.idModalidad = idModalidad;
+    }
+
+    public RelUsuarioEmpresa getRelUsuariosEmpresas() {
+        return relUsuarioEmpresa;
+    }
+
+    public void setRelUsuariosEmpresas(RelUsuarioEmpresa relUsuariosEmpresas) {
+        this.relUsuarioEmpresa = relUsuariosEmpresas;
+    }
+
+    public TipoContrato getIdTipoContrato() {
+        return idTipoContrato;
+    }
+
+    public void setIdTipoContrato(TipoContrato idTipoContrato) {
+        this.idTipoContrato = idTipoContrato;
+    }
+
+    public Ubicacion getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public void setIdUbicacion(Ubicacion idUbicacion) {
+        this.idUbicacion = idUbicacion;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(idVacante);
+        int hash = 0;
+        hash += (idVacante != null ? idVacante.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Vacante)) {
+            return false;
+        }
+        Vacante other = (Vacante) object;
+        return !((this.idVacante == null && other.idVacante != null) || (this.idVacante != null && !this.idVacante.equals(other.idVacante)));
     }
 
     @Override
     public String toString() {
-        return "Vacante{" +
-                "idVacante=" + idVacante +
-                "idUbicacion=" + idUbicacion +
-                "relUsuarioEmpresa=" + relUsuarioEmpresa +
-                "idJornada=" + idJornada +
-                "idModalidad=" + idModalidad +
-                "idTipoContrato=" + idTipoContrato +
-                "tituloVacante='" + tituloVacante +
-                "detalleVacante='" + detalleVacante +
-                "fechaInicioVacante=" + fechaInicioVacante +
-                "fechaFinVacante=" + fechaFinVacante +
-                "estadoVacante=" + estadoVacante +
-                "minSalarioVacante='" + minSalarioVacante +
-                "maxSalarioVacante='" + maxSalarioVacante +
-                '}';
+        return "Vacante{"
+                + "idVacante=" + idVacante
+                + ", ubicacionId=" + (idUbicacion != null ? idUbicacion.getIdUbicacion() : null)
+                + ", usuarioEmpresa=" + (relUsuarioEmpresa != null ? relUsuarioEmpresa.getRelUsuarioEmpresaPK() : null)
+                + ", tituloVacante='" + tituloVacante + '\''
+                + ", estadoVacante=" + estadoVacante
+                + '}';
     }
+
 }

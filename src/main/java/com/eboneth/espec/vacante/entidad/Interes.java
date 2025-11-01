@@ -1,98 +1,107 @@
 package com.eboneth.espec.vacante.entidad;
 
-import com.eboneth.espec.vacante.entidad.pk.InteresPK;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import com.eboneth.espec.vacante.entidad.pk.InteresesPK;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-@Table(name="intereses",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"id_usuario", "id_empresa"}))
-@Entity(name ="vacante_Interes")
+@Table(name = "intereses")
+@Entity(name = "vacante_Intereses")
 public class Interes implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    protected InteresPK interesPK;
-
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Usuario usuario;
+    protected InteresesPK interesesPK;
 
     @JoinColumn(name = "id_empresa", referencedColumnName = "id_empresa", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Empresa empresa;
 
-    @NotNull
-    @Column(name = "tipo_interes")
-    private Short tipoInteres;
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Usuario usuario;
+
+    @Column(name = "tipo_interes", nullable = false)
+    private short tipoInteres;
 
     public Interes() {
     }
 
-    public Interes(InteresPK interesPK, Short tipoInteres) {
-        this.interesPK = interesPK;
+    public Interes(InteresesPK interesesPK) {
+        this.interesesPK = interesesPK;
+    }
+
+    public Interes(InteresesPK interesesPK, short tipoInteres) {
+        this.interesesPK = interesesPK;
         this.tipoInteres = tipoInteres;
     }
 
-    public Interes(InteresPK interesPK, Usuario usuario, Empresa empresa, Short tipoInteres) {
-        this.interesPK = interesPK;
-        this.usuario = usuario;
-        this.empresa = empresa;
+    public Interes(int idEmpresa, int idUsuario) {
+        this.interesesPK = new InteresesPK(idEmpresa, idUsuario);
+    }
+
+    public InteresesPK getInteresesPK() {
+        return interesesPK;
+    }
+
+    public void setInteresesPK(InteresesPK interesesPK) {
+        this.interesesPK = interesesPK;
+    }
+
+    public short getTipoInteres() {
+        return tipoInteres;
+    }
+
+    public void setTipoInteres(short tipoInteres) {
         this.tipoInteres = tipoInteres;
-    }
-
-    public InteresPK getInteresPK() {
-        return interesPK;
-    }
-
-    public void setInteresPK(InteresPK interesPK) {
-        this.interesPK = interesPK;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public Empresa getEmpresa() {
         return empresa;
     }
 
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
+    public void setEmpresa(Empresa empresas) {
+        this.empresa = empresas;
     }
 
-    public Short getTipoInteres() {
-        return tipoInteres;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setTipoInteres(Short tipoInteres) {
-        this.tipoInteres = tipoInteres;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Interes interes)) return false;
-        return Objects.equals(interesPK, interes.interesPK);
+    public void setUsuario(Usuario usuarios) {
+        this.usuario = usuarios;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(interesPK);
+        return Objects.hash(interesesPK);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Interes other = (Interes) obj;
+        return Objects.equals(interesesPK, other.interesesPK);
     }
 
     @Override
     public String toString() {
-        return "Interes{" +
-                "interesPK=" + interesPK +
-                "usuario=" + usuario +
-                "empresa=" + empresa +
-                "tipoInteres=" + tipoInteres +
-                '}';
+        return "empresaId=" + (interesesPK != null ? interesesPK.getIdEmpresa() : null)
+                + ", usuarioId=" + (interesesPK != null ? interesesPK.getIdUsuario() : null)
+                + ", tipoInteres=" + tipoInteres;
     }
 }

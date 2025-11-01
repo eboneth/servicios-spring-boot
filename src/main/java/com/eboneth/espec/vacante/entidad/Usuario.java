@@ -1,11 +1,17 @@
 package com.eboneth.espec.vacante.entidad;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Table(name = "usuarios")
 @Entity(name = "vacante_Usuario")
@@ -15,35 +21,28 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id_usuario")
+    @Column(name = "id_usuario")
     private Integer idUsuario;
 
     @JoinColumn(name = "id_ubicacion", referencedColumnName = "id_ubicacion")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Ubicacion idUbicacion;
 
-    @NotNull
-    @Column(name="tipo_documento_usuario", nullable = false)
-    private Short tipoDocumentoUsuario;
+    @Column(name = "tipo_documento_usuario", nullable = false)
+    private short tipoDocumentoUsuario;
 
-    @NotNull
-    @Size(min=1,max=150)
-    @Column(name="documento_usuario", nullable = false, length = 150, unique = true)
+    @Size(min = 1, max = 50)
+    @Column(name = "documento_usuario", nullable = false, unique = true)
     private String documentoUsuario;
 
-    @NotNull
-    @Size(min=1,max=50)
-    @Column(name="nombres_usuario", nullable = false, length = 50)
+    @Column(name = "nombres_usuario", nullable = false, length = 50)
     private String nombresUsuario;
 
-    @NotNull
-    @Size(min=1,max=50)
-    @Column(name="apellidos_usuario", nullable = false, length = 50)
+    @Column(name = "apellidos_usuario", nullable = false, length = 50)
     private String apellidosUsuario;
 
-    @NotNull
-    @Column(name="estado_usuario", nullable = false)
-    private Short estadoUsuario;
+    @Column(name = "estado_usuario", nullable = false)
+    private short estadoUsuario;
 
     public Usuario() {
     }
@@ -52,14 +51,17 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, Ubicacion idUbicacion, Short tipoDocumentoUsuario, String documentoUsuario, String apellidosUsuario, String nombresUsuario, Short estadoUsuario) {
+    public Usuario(
+            Integer idUsuario, short tipoDocumentoUsuario, String documentoUsuario,
+            String nombresUsuario, String apellidosUsuario, short estadoUsuario, Ubicacion idUbicacion
+    ) {
         this.idUsuario = idUsuario;
-        this.idUbicacion = idUbicacion;
         this.tipoDocumentoUsuario = tipoDocumentoUsuario;
         this.documentoUsuario = documentoUsuario;
-        this.apellidosUsuario = apellidosUsuario;
         this.nombresUsuario = nombresUsuario;
+        this.apellidosUsuario = apellidosUsuario;
         this.estadoUsuario = estadoUsuario;
+        this.idUbicacion = idUbicacion;
     }
 
     public Integer getIdUsuario() {
@@ -70,19 +72,11 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Ubicacion getIdUbicacion() {
-        return idUbicacion;
-    }
-
-    public void setIdUbicacion(Ubicacion idUbicacion) {
-        this.idUbicacion = idUbicacion;
-    }
-
-    public Short getTipoDocumentoUsuario() {
+    public short getTipoDocumentoUsuario() {
         return tipoDocumentoUsuario;
     }
 
-    public void setTipoDocumentoUsuario(Short tipoDocumentoUsuario) {
+    public void setTipoDocumentoUsuario(short tipoDocumentoUsuario) {
         this.tipoDocumentoUsuario = tipoDocumentoUsuario;
     }
 
@@ -110,35 +104,47 @@ public class Usuario implements Serializable {
         this.apellidosUsuario = apellidosUsuario;
     }
 
-    public Short getEstadoUsuario() {
+    public short getEstadoUsuario() {
         return estadoUsuario;
     }
 
-    public void setEstadoUsuario(Short estadoUsuario) {
+    public void setEstadoUsuario(short estadoUsuario) {
         this.estadoUsuario = estadoUsuario;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Usuario usuario)) return false;
-        return Objects.equals(idUsuario, usuario.idUsuario) && Objects.equals(idUbicacion, usuario.idUbicacion) && Objects.equals(tipoDocumentoUsuario, usuario.tipoDocumentoUsuario) && Objects.equals(documentoUsuario, usuario.documentoUsuario) && Objects.equals(nombresUsuario, usuario.nombresUsuario) && Objects.equals(apellidosUsuario, usuario.apellidosUsuario) && Objects.equals(estadoUsuario, usuario.estadoUsuario);
+    public Ubicacion getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public void setIdUbicacion(Ubicacion idUbicacion) {
+        this.idUbicacion = idUbicacion;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idUsuario, idUbicacion, tipoDocumentoUsuario, documentoUsuario, nombresUsuario, apellidosUsuario, estadoUsuario);
+        int hash = 0;
+        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) object;
+        return !((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario)));
     }
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "idUsuario=" + idUsuario +
-                "idUbicacion=" + (idUbicacion != null ? idUbicacion.getIdUbicacion() : "null") +
-                "tipoDocumentoUsuario=" + tipoDocumentoUsuario +
-                "documentoUsuario='" + documentoUsuario +
-                "nombresUsuario='" + nombresUsuario +
-                "apellidosUsuario='" + apellidosUsuario +
-                "estadoUsuario=" + estadoUsuario +
-                '}';
+        return "idUsuario=" + idUsuario
+                + ", idUbicacion=" + idUbicacion
+                + ", tipoDocumentoUsuario=" + tipoDocumentoUsuario
+                + ", documentoUsuario=" + documentoUsuario
+                + ", nombresUsuario=" + nombresUsuario
+                + ", apellidosUsuario=" + apellidosUsuario
+                + ", estadoUsuario=" + estadoUsuario;
     }
+
 }

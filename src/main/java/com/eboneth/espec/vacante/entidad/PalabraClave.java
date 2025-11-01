@@ -1,14 +1,21 @@
 package com.eboneth.espec.vacante.entidad;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Table(name = "palabras_claves")
-@Entity(name = "vacantes_PalabraClaves")
+@Entity(name = "vacante_PalabraClave")
 public class PalabraClave implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,15 +25,14 @@ public class PalabraClave implements Serializable {
     @Column(name = "id_palabra_clave")
     private Integer idPalabraClave;
 
-    @NotNull
     @JoinColumn(name = "id_area", referencedColumnName = "id_area")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Area idArea;
 
     @NotNull
-    @Size(min=1, max=150)
-    @Column(name = "texto_palabra_clave", nullable = false, unique = true, length = 150)
-    private  String textoPalabraClave;
+    @Size(min = 1, max = 150)
+    @Column(name = "texto_palabra_clave", nullable = false, length = 150)
+    private String textoPalabraClave;
 
     public PalabraClave() {
     }
@@ -35,9 +41,8 @@ public class PalabraClave implements Serializable {
         this.idPalabraClave = idPalabraClave;
     }
 
-    public PalabraClave(Integer idPalabraClave, Area idArea, String textoPalabraClave) {
+    public PalabraClave(Integer idPalabraClave, String textoPalabraClave) {
         this.idPalabraClave = idPalabraClave;
-        this.idArea = idArea;
         this.textoPalabraClave = textoPalabraClave;
     }
 
@@ -49,14 +54,6 @@ public class PalabraClave implements Serializable {
         this.idPalabraClave = idPalabraClave;
     }
 
-    public Area getIdArea() {
-        return idArea;
-    }
-
-    public void setIdArea(Area idArea) {
-        this.idArea = idArea;
-    }
-
     public String getTextoPalabraClave() {
         return textoPalabraClave;
     }
@@ -65,23 +62,36 @@ public class PalabraClave implements Serializable {
         this.textoPalabraClave = textoPalabraClave;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof PalabraClave that)) return false;
-        return Objects.equals(idPalabraClave, that.idPalabraClave);
+    public Area getIdArea() {
+        return idArea;
+    }
+
+    public void setIdArea(Area idArea) {
+        this.idArea = idArea;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(idPalabraClave);
+        int hash = 0;
+        hash += (idPalabraClave != null ? idPalabraClave.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof PalabraClave)) {
+            return false;
+        }
+        PalabraClave other = (PalabraClave) object;
+        return !((this.idPalabraClave == null && other.idPalabraClave != null) || (this.idPalabraClave != null && !this.idPalabraClave.equals(other.idPalabraClave)));
     }
 
     @Override
     public String toString() {
-        return "PalabraClave{" +
-                "idPalabraClave=" + idPalabraClave +
-                "idArea=" + idArea +
-                "textoPalabraClave='" + textoPalabraClave + '\'' +
-                '}';
+        return "PalabraClave["
+                + "idPalabraClave=" + idPalabraClave
+                + ", areaId=" + (idArea != null ? idArea.getIdArea() : null)
+                + ", textoPalabraClave='" + textoPalabraClave + ']';
     }
+
 }
