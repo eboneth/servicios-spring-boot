@@ -1,0 +1,4 @@
+# Ignorar archivos del sistema de Mac
+.DS_store
+.idea
+
