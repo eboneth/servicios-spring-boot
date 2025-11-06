@@ -56,7 +56,6 @@ public class Vacante implements Serializable {
     private String tituloVacante;
 
     @NotNull
-    @Lob
     @Column(name = "detalle_vacante", nullable = false)
     private String detalleVacante;
 
